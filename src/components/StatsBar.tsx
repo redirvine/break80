@@ -1,0 +1,43 @@
+import { Round } from "@/lib/types";
+import { calculateHandicapIndex } from "@/lib/handicap";
+
+interface StatsBarProps {
+  rounds: Round[];
+}
+
+export default function StatsBar({ rounds }: StatsBarProps) {
+  const count = rounds.length;
+  const best = count > 0 ? Math.min(...rounds.map((r) => r.score)) : null;
+  const avg =
+    count > 0
+      ? (rounds.reduce((sum, r) => sum + r.score, 0) / count).toFixed(1)
+      : null;
+  const sorted = [...rounds].sort(
+    (a, b) =>
+      new Date(b.date_played).getTime() - new Date(a.date_played).getTime()
+  );
+  const latest = sorted.length > 0 ? sorted[0].score : null;
+  const handicap = calculateHandicapIndex(rounds);
+
+  const stats = [
+    { label: "Rounds Played", value: count },
+    { label: "Best Score", value: best ?? "—" },
+    { label: "Average", value: avg ?? "—" },
+    { label: "Latest", value: latest ?? "—" },
+    { label: "Handicap", value: handicap !== null ? handicap.toFixed(1) : "—" },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      {stats.map((s) => (
+        <div
+          key={s.label}
+          className="rounded-lg border border-gray-200 bg-white p-4 text-center"
+        >
+          <div className="text-2xl font-bold">{s.value}</div>
+          <div className="mt-1 text-xs text-gray-500">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
