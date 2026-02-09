@@ -24,6 +24,9 @@ export interface Round {
   score: number;
   notes: string | null;
   image_url: string | null;
+  gir: number | null;
+  total_putts: number | null;
+  penalties: number | null;
   course_id: string | null;
   tee_id: string | null;
   created_at: string;

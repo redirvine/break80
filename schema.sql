@@ -103,5 +103,10 @@ create policy "Authenticated users can delete tees"
 alter table rounds add column course_id uuid references courses(id);
 alter table rounds add column tee_id uuid references tees(id);
 
+-- Round stats columns (nullable, optional)
+alter table rounds add column gir integer;
+alter table rounds add column total_putts integer;
+alter table rounds add column penalties integer;
+
 -- Storage: create 'scorecards' bucket via Supabase Dashboard
 -- Set it to public (public read, authenticated write)

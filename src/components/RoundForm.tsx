@@ -60,6 +60,12 @@ export default function RoundForm({ round }: RoundFormProps) {
     const form = new FormData(e.currentTarget);
     const datePlayed = form.get("date_played") as string;
     const score = parseInt(form.get("score") as string, 10);
+    const girRaw = form.get("gir") as string;
+    const gir = girRaw ? parseInt(girRaw, 10) : null;
+    const totalPuttsRaw = form.get("total_putts") as string;
+    const totalPutts = totalPuttsRaw ? parseInt(totalPuttsRaw, 10) : null;
+    const penaltiesRaw = form.get("penalties") as string;
+    const penalties = penaltiesRaw ? parseInt(penaltiesRaw, 10) : null;
     const notes = (form.get("notes") as string) || null;
     const imageFile = form.get("image") as File;
 
@@ -106,6 +112,9 @@ export default function RoundForm({ round }: RoundFormProps) {
       course_id: selectedCourseId,
       tee_id: selectedTeeId || null,
       score,
+      gir: isNaN(gir as number) ? null : gir,
+      total_putts: isNaN(totalPutts as number) ? null : totalPutts,
+      penalties: isNaN(penalties as number) ? null : penalties,
       notes,
       image_url: imageUrl,
     };
@@ -234,6 +243,54 @@ export default function RoundForm({ round }: RoundFormProps) {
           placeholder="e.g. 85"
           className={inputClass}
         />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label htmlFor="gir" className="mb-1 block text-sm font-medium">
+            GIR
+          </label>
+          <input
+            type="number"
+            id="gir"
+            name="gir"
+            min={0}
+            max={18}
+            defaultValue={round?.gir ?? ""}
+            placeholder="0-18"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="total_putts" className="mb-1 block text-sm font-medium">
+            Total Putts
+          </label>
+          <input
+            type="number"
+            id="total_putts"
+            name="total_putts"
+            min={0}
+            max={99}
+            defaultValue={round?.total_putts ?? ""}
+            placeholder="e.g. 32"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="penalties" className="mb-1 block text-sm font-medium">
+            Penalties
+          </label>
+          <input
+            type="number"
+            id="penalties"
+            name="penalties"
+            min={0}
+            max={99}
+            defaultValue={round?.penalties ?? ""}
+            placeholder="e.g. 2"
+            className={inputClass}
+          />
+        </div>
       </div>
 
       <div>

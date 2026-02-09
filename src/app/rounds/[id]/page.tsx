@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Round } from "@/lib/types";
 import Link from "next/link";
 import DeleteRoundButton from "@/components/DeleteRoundButton";
+import EditRoundLink from "@/components/EditRoundLink";
 
 export const dynamic = "force-dynamic";
 
@@ -34,12 +35,7 @@ export default async function RoundDetailPage({
           &larr; Back to rounds
         </Link>
         <div className="flex gap-2">
-          <Link
-            href={`/rounds/${round.id}/edit`}
-            className="rounded-lg border border-green-600 px-3 py-1 text-sm font-medium text-green-600 hover:bg-green-50"
-          >
-            Edit
-          </Link>
+          <EditRoundLink roundId={round.id} />
           <DeleteRoundButton roundId={round.id} />
         </div>
       </div>
@@ -95,6 +91,34 @@ export default async function RoundDetailPage({
                 <div>
                   <span className="text-gray-500">Rating:</span>{" "}
                   <span className="font-medium">{round.tee.rating}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {(round.gir !== null || round.total_putts !== null || round.penalties !== null) && (
+          <div className="mt-4 rounded-lg bg-gray-50 p-4">
+            <h2 className="mb-2 text-sm font-semibold text-gray-500">
+              Round Stats
+            </h2>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-3">
+              {round.gir !== null && (
+                <div>
+                  <span className="text-gray-500">GIR:</span>{" "}
+                  <span className="font-medium">{round.gir}</span>
+                </div>
+              )}
+              {round.total_putts !== null && (
+                <div>
+                  <span className="text-gray-500">Total Putts:</span>{" "}
+                  <span className="font-medium">{round.total_putts}</span>
+                </div>
+              )}
+              {round.penalties !== null && (
+                <div>
+                  <span className="text-gray-500">Penalties:</span>{" "}
+                  <span className="font-medium">{round.penalties}</span>
                 </div>
               )}
             </div>

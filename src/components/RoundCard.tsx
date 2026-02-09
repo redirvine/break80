@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "./AuthProvider";
 import { Round } from "@/lib/types";
 
 interface RoundCardProps {
@@ -8,6 +9,7 @@ interface RoundCardProps {
 }
 
 export default function RoundCard({ round }: RoundCardProps) {
+  const { user } = useAuth();
   const isUnder80 = round.score < 80;
 
   return (
@@ -38,13 +40,15 @@ export default function RoundCard({ round }: RoundCardProps) {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Link
-            href={`/rounds/${round.id}/edit`}
-            onClick={(e) => e.stopPropagation()}
-            className="rounded border border-green-600 px-2 py-0.5 text-xs font-medium text-green-600 hover:bg-green-50"
-          >
-            Edit
-          </Link>
+          {user && (
+            <Link
+              href={`/rounds/${round.id}/edit`}
+              onClick={(e) => e.stopPropagation()}
+              className="rounded border border-green-600 px-2 py-0.5 text-xs font-medium text-green-600 hover:bg-green-50"
+            >
+              Edit
+            </Link>
+          )}
           <div
             className={`text-2xl font-bold ${
               isUnder80 ? "text-green-600" : "text-gray-900"
