@@ -37,6 +37,9 @@ export default function RoundCard({ round }: RoundCardProps) {
                 year: "numeric",
               }
             )}
+            <span className="ml-2 text-gray-400">
+              · {round.transport === "cart" ? "Cart" : "Walk"}
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-3">
