@@ -24,6 +24,10 @@ export default async function RoundDetailPage({
 
   const round = data as Round;
   const isUnder80 = round.score < 80;
+  const par = round.tee?.par;
+  const vsPar = par ? round.score - par : null;
+  const vsParDisplay =
+    vsPar !== null ? (vsPar > 0 ? `+${vsPar}` : vsPar === 0 ? "E" : `${vsPar}`) : null;
 
   return (
     <div className="space-y-6">
@@ -59,12 +63,21 @@ export default async function RoundDetailPage({
               {round.transport === "cart" ? "Rode cart" : "Walked"}
             </p>
           </div>
-          <div
-            className={`text-4xl font-bold ${
-              isUnder80 ? "text-green-600" : "text-gray-900"
-            }`}
-          >
-            {round.score}
+          <div className="text-right">
+            <div
+              className={`text-4xl font-bold ${
+                isUnder80 ? "text-green-600" : "text-gray-900"
+              }`}
+            >
+              {round.score}
+            </div>
+            {vsParDisplay !== null && (
+              <div className={`text-sm font-medium ${
+                vsPar! < 0 ? "text-green-600" : vsPar! > 0 ? "text-red-500" : "text-gray-500"
+              }`}>
+                {vsParDisplay}
+              </div>
+            )}
           </div>
         </div>
 
