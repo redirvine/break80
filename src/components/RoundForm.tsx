@@ -66,13 +66,14 @@ export default function RoundForm({ round }: RoundFormProps) {
     const totalPutts = totalPuttsRaw ? parseInt(totalPuttsRaw, 10) : null;
     const penaltiesRaw = form.get("penalties") as string;
     const penalties = penaltiesRaw ? parseInt(penaltiesRaw, 10) : null;
+    const transport = form.get("transport") as string;
     const notes = (form.get("notes") as string) || null;
     const imageFile = form.get("image") as File;
 
     const selectedCourse = courses.find((c) => c.id === selectedCourseId);
     const courseName = selectedCourse?.name || "";
 
-    if (!datePlayed || !selectedCourseId || isNaN(score)) {
+    if (!datePlayed || !selectedCourseId || isNaN(score) || !transport) {
       setError("Please fill in all required fields.");
       setLoading(false);
       return;
@@ -112,6 +113,7 @@ export default function RoundForm({ round }: RoundFormProps) {
       course_id: selectedCourseId,
       tee_id: selectedTeeId || null,
       score,
+      transport,
       gir: isNaN(gir as number) ? null : gir,
       total_putts: isNaN(totalPutts as number) ? null : totalPutts,
       penalties: isNaN(penalties as number) ? null : penalties,
@@ -243,6 +245,33 @@ export default function RoundForm({ round }: RoundFormProps) {
           placeholder="e.g. 85"
           className={inputClass}
         />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium">Transport *</label>
+        <div className="flex gap-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="transport"
+              value="walk"
+              required
+              defaultChecked={round?.transport ? round.transport === "walk" : true}
+              className="text-green-600 focus:ring-green-500"
+            />
+            <span className="text-sm">Walk</span>
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="transport"
+              value="cart"
+              defaultChecked={round?.transport === "cart"}
+              className="text-green-600 focus:ring-green-500"
+            />
+            <span className="text-sm">Cart</span>
+          </label>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

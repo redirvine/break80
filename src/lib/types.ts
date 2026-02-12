@@ -27,6 +27,7 @@ export interface Round {
   gir: number | null;
   total_putts: number | null;
   penalties: number | null;
+  transport: "walk" | "cart";
   course_id: string | null;
   tee_id: string | null;
   created_at: string;

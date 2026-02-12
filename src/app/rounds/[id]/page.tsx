@@ -55,6 +55,9 @@ export default async function RoundDetailPage({
                 }
               )}
             </p>
+            <p className="mt-1 text-sm text-gray-400">
+              {round.transport === "cart" ? "Rode cart" : "Walked"}
+            </p>
           </div>
           <div
             className={`text-4xl font-bold ${

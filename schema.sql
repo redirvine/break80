@@ -108,5 +108,8 @@ alter table rounds add column gir integer;
 alter table rounds add column total_putts integer;
 alter table rounds add column penalties integer;
 
+-- Transport mode (walked or cart)
+alter table rounds add column transport text not null default 'walk' check (transport in ('walk', 'cart'));
+
 -- Storage: create 'scorecards' bucket via Supabase Dashboard
 -- Set it to public (public read, authenticated write)
