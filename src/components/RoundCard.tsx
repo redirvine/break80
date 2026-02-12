@@ -11,6 +11,10 @@ interface RoundCardProps {
 export default function RoundCard({ round }: RoundCardProps) {
   const { user } = useAuth();
   const isUnder80 = round.score < 80;
+  const par = round.tee?.par;
+  const vsPar = par ? round.score - par : null;
+  const vsParDisplay =
+    vsPar !== null ? (vsPar > 0 ? `+${vsPar}` : vsPar === 0 ? "E" : `${vsPar}`) : null;
 
   return (
     <Link
@@ -52,12 +56,21 @@ export default function RoundCard({ round }: RoundCardProps) {
               Edit
             </Link>
           )}
-          <div
-            className={`text-2xl font-bold ${
-              isUnder80 ? "text-green-600" : "text-gray-900"
-            }`}
-          >
-            {round.score}
+          <div className="text-right">
+            <div
+              className={`text-2xl font-bold ${
+                isUnder80 ? "text-green-600" : "text-gray-900"
+              }`}
+            >
+              {round.score}
+            </div>
+            {vsParDisplay !== null && (
+              <div className={`text-xs font-medium ${
+                vsPar! < 0 ? "text-green-600" : vsPar! > 0 ? "text-red-500" : "text-gray-500"
+              }`}>
+                {vsParDisplay}
+              </div>
+            )}
           </div>
         </div>
       </div>
