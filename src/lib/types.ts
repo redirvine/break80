@@ -3,6 +3,7 @@ export interface Course {
   name: string;
   city: string | null;
   state: string | null;
+  holes: 9 | 18;
   created_at: string;
 }
 
