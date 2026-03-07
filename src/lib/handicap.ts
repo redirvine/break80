@@ -10,7 +10,7 @@ export function calculateDifferential(
 
 export function getEligibleRounds(rounds: Round[]): Round[] {
   return rounds
-    .filter((r) => r.tee?.slope != null && r.tee?.rating != null)
+    .filter((r) => r.tee?.slope != null && r.tee?.rating != null && r.course?.holes !== 9)
     .sort(
       (a, b) =>
         new Date(a.date_played).getTime() - new Date(b.date_played).getTime()
