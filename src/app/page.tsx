@@ -1,5 +1,4 @@
 import { createServerClient } from "@/lib/supabase-server";
-import StrokesToGo from "@/components/dashboard/StrokesToGo";
 import RollingBest from "@/components/dashboard/RollingBest";
 import ScoreDistribution from "@/components/dashboard/ScoreDistribution";
 import RoundsMasterDetail from "@/components/dashboard/RoundsMasterDetail";
@@ -18,19 +17,11 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">
-          break<span className="text-green-600">80</span>
-        </h1>
-        <p className="mt-1 text-gray-500">
-          Journey of an average golfer trying to break 80.
-        </p>
-      </div>
-
       <div className="grid gap-6 sm:grid-cols-3">
         <RollingBest rounds={allRounds} />
-        <ScoreDistribution rounds={allRounds} />
-        <StrokesToGo rounds={allRounds} />
+        <div className="sm:col-span-2">
+          <ScoreDistribution rounds={allRounds} />
+        </div>
       </div>
 
       <RoundsMasterDetail rounds={allRounds} />
