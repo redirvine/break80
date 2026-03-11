@@ -188,6 +188,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                 Score{sortArrow("score")}
               </th>
               <th className="px-3 py-2 text-right">vs Par</th>
+              <th className="px-3 py-2 text-right">vs 79</th>
             </tr>
           </thead>
           <tbody>
@@ -221,6 +222,13 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                   className={`px-3 py-2 text-right text-xs font-medium ${vsParColor(r)}`}
                 >
                   {vsParDisplay(r) ?? "—"}
+                </td>
+                <td
+                  className={`px-3 py-2 text-right text-xs font-medium ${
+                    r.score < 80 ? "text-green-600" : r.score === 80 ? "text-yellow-500" : "text-gray-500"
+                  }`}
+                >
+                  {r.score < 80 ? `${r.score - 79}` : `+${r.score - 79}`}
                 </td>
               </tr>
             ))}
