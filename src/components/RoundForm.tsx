@@ -303,22 +303,22 @@ export default function RoundForm({ round }: RoundFormProps) {
             <input
               type="radio"
               name="transport"
-              value="walk"
+              value="cart"
               required
-              defaultChecked={round?.transport ? round.transport === "walk" : true}
+              defaultChecked={round?.transport ? round.transport === "cart" : true}
               className="text-green-600 focus:ring-green-500"
             />
-            <span className="text-sm">Walk</span>
+            <span className="text-sm">Cart</span>
           </label>
           <label className="flex items-center gap-2">
             <input
               type="radio"
               name="transport"
-              value="cart"
-              defaultChecked={round?.transport === "cart"}
+              value="walk"
+              defaultChecked={round?.transport === "walk"}
               className="text-green-600 focus:ring-green-500"
             />
-            <span className="text-sm">Cart</span>
+            <span className="text-sm">Walk</span>
           </label>
         </div>
       </div>
