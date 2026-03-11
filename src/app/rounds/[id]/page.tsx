@@ -118,12 +118,24 @@ export default async function RoundDetailPage({
           </div>
         )}
 
-        {(round.gir !== null || round.total_putts !== null || round.penalties !== null) && (
+        {(round.birdies !== null || round.pars !== null || round.gir !== null || round.total_putts !== null || round.penalties !== null) && (
           <div className="mt-4 rounded-lg bg-gray-50 p-4">
             <h2 className="mb-2 text-sm font-semibold text-gray-500">
               Round Stats
             </h2>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-5">
+              {round.birdies !== null && (
+                <div>
+                  <span className="text-gray-500">Birdies:</span>{" "}
+                  <span className="font-medium">{round.birdies}</span>
+                </div>
+              )}
+              {round.pars !== null && (
+                <div>
+                  <span className="text-gray-500">Pars:</span>{" "}
+                  <span className="font-medium">{round.pars}</span>
+                </div>
+              )}
               {round.gir !== null && (
                 <div>
                   <span className="text-gray-500">GIR:</span>{" "}
@@ -132,7 +144,7 @@ export default async function RoundDetailPage({
               )}
               {round.total_putts !== null && (
                 <div>
-                  <span className="text-gray-500">Total Putts:</span>{" "}
+                  <span className="text-gray-500">Putts:</span>{" "}
                   <span className="font-medium">{round.total_putts}</span>
                 </div>
               )}

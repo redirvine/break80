@@ -27,6 +27,8 @@ export interface Round {
   back_nine: number | null;
   notes: string | null;
   image_url: string | null;
+  birdies: number | null;
+  pars: number | null;
   gir: number | null;
   total_putts: number | null;
   penalties: number | null;

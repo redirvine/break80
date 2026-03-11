@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 import { Course, Round, Tee } from "@/lib/types";
 import Link from "next/link";
+import ImageCropper from "./ImageCropper";
 
 interface RoundFormProps {
   round?: Round;
@@ -24,7 +25,32 @@ export default function RoundForm({ round }: RoundFormProps) {
   const [backNine, setBackNine] = useState(round?.back_nine?.toString() ?? "");
   const [score, setScore] = useState(round?.score?.toString() ?? "");
 
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
+  const [croppedPreview, setCroppedPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const isEdit = !!round;
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setCropSrc(url);
+    setCroppedBlob(null);
+    setCroppedPreview(null);
+  }
+
+  function handleCropDone(blob: Blob) {
+    setCroppedBlob(blob);
+    setCroppedPreview(URL.createObjectURL(blob));
+    setCropSrc(null);
+  }
+
+  function handleCropCancel() {
+    setCropSrc(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   function handleNineChange(which: "front" | "back", value: string) {
     if (which === "front") setFrontNine(value);
@@ -75,6 +101,10 @@ export default function RoundForm({ round }: RoundFormProps) {
     const scoreVal = parseInt(score, 10);
     const frontNineVal = frontNine ? parseInt(frontNine, 10) : null;
     const backNineVal = backNine ? parseInt(backNine, 10) : null;
+    const birdiesRaw = form.get("birdies") as string;
+    const birdies = birdiesRaw ? parseInt(birdiesRaw, 10) : null;
+    const parsRaw = form.get("pars") as string;
+    const parsVal = parsRaw ? parseInt(parsRaw, 10) : null;
     const girRaw = form.get("gir") as string;
     const gir = girRaw ? parseInt(girRaw, 10) : null;
     const totalPuttsRaw = form.get("total_putts") as string;
@@ -83,7 +113,6 @@ export default function RoundForm({ round }: RoundFormProps) {
     const penalties = penaltiesRaw ? parseInt(penaltiesRaw, 10) : null;
     const transport = form.get("transport") as string;
     const notes = (form.get("notes") as string) || null;
-    const imageFile = form.get("image") as File;
 
     const selectedCourse = courses.find((c) => c.id === selectedCourseId);
     const courseName = selectedCourse?.name || "";
@@ -103,12 +132,13 @@ export default function RoundForm({ round }: RoundFormProps) {
     // Keep existing image unless a new one is selected
     let imageUrl: string | null = isEdit ? round.image_url : null;
 
-    if (imageFile && imageFile.size > 0) {
-      const ext = imageFile.name.split(".").pop();
+    const uploadBlob = croppedBlob ?? (fileInputRef.current?.files?.[0]?.size ? fileInputRef.current.files[0] : null);
+    if (uploadBlob) {
+      const ext = croppedBlob ? "jpg" : fileInputRef.current!.files![0].name.split(".").pop();
       const path = `${Date.now()}.${ext}`;
       const { error: uploadError } = await supabase.storage
         .from("scorecards")
-        .upload(path, imageFile);
+        .upload(path, uploadBlob);
 
       if (uploadError) {
         setError(`Image upload failed: ${uploadError.message}`);
@@ -131,6 +161,8 @@ export default function RoundForm({ round }: RoundFormProps) {
       front_nine: isNaN(frontNineVal as number) ? null : frontNineVal,
       back_nine: isNaN(backNineVal as number) ? null : backNineVal,
       transport,
+      birdies: isNaN(birdies as number) ? null : birdies,
+      pars: isNaN(parsVal as number) ? null : parsVal,
       gir: isNaN(gir as number) ? null : gir,
       total_putts: isNaN(totalPutts as number) ? null : totalPutts,
       penalties: isNaN(penalties as number) ? null : penalties,
@@ -323,7 +355,37 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+        <div>
+          <label htmlFor="birdies" className="mb-1 block text-sm font-medium">
+            Birdies
+          </label>
+          <input
+            type="number"
+            id="birdies"
+            name="birdies"
+            min={0}
+            max={18}
+            defaultValue={round?.birdies ?? ""}
+            placeholder="0-18"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="pars" className="mb-1 block text-sm font-medium">
+            Pars
+          </label>
+          <input
+            type="number"
+            id="pars"
+            name="pars"
+            min={0}
+            max={18}
+            defaultValue={round?.pars ?? ""}
+            placeholder="0-18"
+            className={inputClass}
+          />
+        </div>
         <div>
           <label htmlFor="gir" className="mb-1 block text-sm font-medium">
             GIR
@@ -341,7 +403,7 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
         <div>
           <label htmlFor="total_putts" className="mb-1 block text-sm font-medium">
-            Total Putts
+            Putts
           </label>
           <input
             type="number"
@@ -386,21 +448,39 @@ export default function RoundForm({ round }: RoundFormProps) {
       </div>
 
       <div>
-        <label htmlFor="image" className="mb-1 block text-sm font-medium">
+        <label className="mb-1 block text-sm font-medium">
           Scorecard Image
         </label>
-        {isEdit && round.image_url && (
+        {isEdit && round.image_url && !croppedPreview && (
           <p className="mb-1 text-xs text-gray-500">
             Current image will be kept unless you select a new one.
           </p>
         )}
         <input
           type="file"
-          id="image"
-          name="image"
+          ref={fileInputRef}
           accept="image/*"
+          onChange={handleFileSelect}
           className="w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-green-700 hover:file:bg-green-100"
         />
+        {cropSrc && (
+          <div className="mt-3">
+            <ImageCropper
+              imageSrc={cropSrc}
+              onCropDone={handleCropDone}
+              onCancel={handleCropCancel}
+            />
+          </div>
+        )}
+        {croppedPreview && (
+          <div className="mt-3">
+            <img
+              src={croppedPreview}
+              alt="Cropped preview"
+              className="w-full rounded-lg border border-gray-200"
+            />
+          </div>
+        )}
       </div>
 
       <button

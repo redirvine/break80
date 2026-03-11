@@ -113,8 +113,20 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               </div>
             </div>
 
-            {(selected.gir != null || selected.total_putts != null || selected.penalties != null) && (
-              <div className="mb-3 grid grid-cols-3 gap-2 rounded bg-gray-50 p-2 text-center text-xs">
+            {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.total_putts != null || selected.penalties != null) && (
+              <div className="mb-3 flex flex-wrap justify-center gap-3 rounded bg-gray-50 p-2 text-center text-xs">
+                {selected.birdies != null && (
+                  <div>
+                    <div className="font-semibold">{selected.birdies}</div>
+                    <div className="text-gray-500">Birdies</div>
+                  </div>
+                )}
+                {selected.pars != null && (
+                  <div>
+                    <div className="font-semibold">{selected.pars}</div>
+                    <div className="text-gray-500">Pars</div>
+                  </div>
+                )}
                 {selected.gir != null && (
                   <div>
                     <div className="font-semibold">{selected.gir}</div>
