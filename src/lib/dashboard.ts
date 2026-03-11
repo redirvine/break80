@@ -16,7 +16,7 @@ export function getStrokesToGo(
   }
 
   return {
-    strokes: best.score - 80,
+    strokes: best.score - 79,
     bestScore: best.score,
     date: new Date(best.date_played).toLocaleDateString("en-US", {
       month: "short",

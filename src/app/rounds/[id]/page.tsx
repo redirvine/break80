@@ -71,6 +71,11 @@ export default async function RoundDetailPage({
             >
               {round.score}
             </div>
+            {(round.front_nine != null || round.back_nine != null) && (
+              <div className="text-sm text-gray-400">
+                {round.front_nine ?? "—"} / {round.back_nine ?? "—"}
+              </div>
+            )}
             {vsParDisplay !== null && (
               <div className={`text-sm font-medium ${
                 vsPar! < 0 ? "text-green-600" : vsPar! > 0 ? "text-red-500" : "text-gray-500"

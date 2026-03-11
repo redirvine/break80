@@ -23,6 +23,8 @@ export interface Round {
   date_played: string;
   course_name: string;
   score: number;
+  front_nine: number | null;
+  back_nine: number | null;
   notes: string | null;
   image_url: string | null;
   gir: number | null;

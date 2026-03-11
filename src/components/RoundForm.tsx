@@ -20,8 +20,21 @@ export default function RoundForm({ round }: RoundFormProps) {
     round?.course_id ?? ""
   );
   const [selectedTeeId, setSelectedTeeId] = useState(round?.tee_id ?? "");
+  const [frontNine, setFrontNine] = useState(round?.front_nine?.toString() ?? "");
+  const [backNine, setBackNine] = useState(round?.back_nine?.toString() ?? "");
+  const [score, setScore] = useState(round?.score?.toString() ?? "");
 
   const isEdit = !!round;
+
+  function handleNineChange(which: "front" | "back", value: string) {
+    if (which === "front") setFrontNine(value);
+    else setBackNine(value);
+    const f = which === "front" ? parseInt(value, 10) : parseInt(frontNine, 10);
+    const b = which === "back" ? parseInt(value, 10) : parseInt(backNine, 10);
+    if (!isNaN(f) && !isNaN(b)) {
+      setScore(String(f + b));
+    }
+  }
 
   useEffect(() => {
     supabase
@@ -59,7 +72,9 @@ export default function RoundForm({ round }: RoundFormProps) {
 
     const form = new FormData(e.currentTarget);
     const datePlayed = form.get("date_played") as string;
-    const score = parseInt(form.get("score") as string, 10);
+    const scoreVal = parseInt(score, 10);
+    const frontNineVal = frontNine ? parseInt(frontNine, 10) : null;
+    const backNineVal = backNine ? parseInt(backNine, 10) : null;
     const girRaw = form.get("gir") as string;
     const gir = girRaw ? parseInt(girRaw, 10) : null;
     const totalPuttsRaw = form.get("total_putts") as string;
@@ -73,13 +88,13 @@ export default function RoundForm({ round }: RoundFormProps) {
     const selectedCourse = courses.find((c) => c.id === selectedCourseId);
     const courseName = selectedCourse?.name || "";
 
-    if (!datePlayed || !selectedCourseId || isNaN(score) || !transport) {
+    if (!datePlayed || !selectedCourseId || isNaN(scoreVal) || !transport) {
       setError("Please fill in all required fields.");
       setLoading(false);
       return;
     }
 
-    if (score < 1 || score > 199) {
+    if (scoreVal < 1 || scoreVal > 199) {
       setError("Score must be between 1 and 199.");
       setLoading(false);
       return;
@@ -112,7 +127,9 @@ export default function RoundForm({ round }: RoundFormProps) {
       course_name: courseName,
       course_id: selectedCourseId,
       tee_id: selectedTeeId || null,
-      score,
+      score: scoreVal,
+      front_nine: isNaN(frontNineVal as number) ? null : frontNineVal,
+      back_nine: isNaN(backNineVal as number) ? null : backNineVal,
       transport,
       gir: isNaN(gir as number) ? null : gir,
       total_putts: isNaN(totalPutts as number) ? null : totalPutts,
@@ -230,21 +247,53 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
       )}
 
-      <div>
-        <label htmlFor="score" className="mb-1 block text-sm font-medium">
-          Score *
-        </label>
-        <input
-          type="number"
-          id="score"
-          name="score"
-          required
-          min={1}
-          max={199}
-          defaultValue={round?.score ?? ""}
-          placeholder="e.g. 85"
-          className={inputClass}
-        />
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label htmlFor="front_nine" className="mb-1 block text-sm font-medium">
+            Front 9
+          </label>
+          <input
+            type="number"
+            id="front_nine"
+            min={1}
+            max={99}
+            value={frontNine}
+            onChange={(e) => handleNineChange("front", e.target.value)}
+            placeholder="e.g. 42"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="back_nine" className="mb-1 block text-sm font-medium">
+            Back 9
+          </label>
+          <input
+            type="number"
+            id="back_nine"
+            min={1}
+            max={99}
+            value={backNine}
+            onChange={(e) => handleNineChange("back", e.target.value)}
+            placeholder="e.g. 43"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="score" className="mb-1 block text-sm font-medium">
+            Total *
+          </label>
+          <input
+            type="number"
+            id="score"
+            required
+            min={1}
+            max={199}
+            value={score}
+            onChange={(e) => setScore(e.target.value)}
+            placeholder="e.g. 85"
+            className={inputClass}
+          />
+        </div>
       </div>
 
       <div>
