@@ -2,7 +2,6 @@ import { createServerClient } from "@/lib/supabase-server";
 import StrokesToGo from "@/components/dashboard/StrokesToGo";
 import RollingBest from "@/components/dashboard/RollingBest";
 import ScoreDistribution from "@/components/dashboard/ScoreDistribution";
-import MilestoneTrail from "@/components/dashboard/MilestoneTrail";
 import RoundCard from "@/components/RoundCard";
 import { Round } from "@/lib/types";
 
@@ -29,14 +28,11 @@ export default async function HomePage() {
         </p>
       </div>
 
-      <StrokesToGo rounds={allRounds} />
-
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-3">
         <RollingBest rounds={allRounds} />
         <ScoreDistribution rounds={allRounds} />
+        <StrokesToGo rounds={allRounds} />
       </div>
-
-      <MilestoneTrail rounds={allRounds} />
 
       <div>
         <h2 className="mb-4 text-lg font-semibold">Recent Rounds</h2>
