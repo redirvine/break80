@@ -4,13 +4,23 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 
+interface NineHoleInput {
+  slope: string;
+  rating: string;
+}
+
 interface TeeInput {
   tee_name: string;
   yardage: string;
   par: string;
   slope: string;
   rating: string;
+  combineNines: boolean;
+  nine1: NineHoleInput;
+  nine2: NineHoleInput;
 }
+
+const emptyNine = (): NineHoleInput => ({ slope: "", rating: "" });
 
 const emptyTee = (): TeeInput => ({
   tee_name: "",
@@ -18,6 +28,9 @@ const emptyTee = (): TeeInput => ({
   par: "",
   slope: "",
   rating: "",
+  combineNines: false,
+  nine1: emptyNine(),
+  nine2: emptyNine(),
 });
 
 export default function CourseForm() {
@@ -40,6 +53,37 @@ export default function CourseForm() {
 
   function updateTee(index: number, field: keyof TeeInput, value: string) {
     setTees(tees.map((t, i) => (i === index ? { ...t, [field]: value } : t)));
+  }
+
+  function toggleCombineNines(index: number) {
+    setTees(
+      tees.map((t, i) => {
+        if (i !== index) return t;
+        const next = !t.combineNines;
+        if (!next) return { ...t, combineNines: false };
+        return { ...t, combineNines: true, slope: "", rating: "", nine1: emptyNine(), nine2: emptyNine() };
+      })
+    );
+  }
+
+  function updateNine(teeIndex: number, nine: "nine1" | "nine2", field: keyof NineHoleInput, value: string) {
+    setTees(
+      tees.map((t, i) => {
+        if (i !== teeIndex) return t;
+        const updated = { ...t, [nine]: { ...t[nine], [field]: value } };
+        const s1 = parseFloat(updated.nine1.slope);
+        const s2 = parseFloat(updated.nine2.slope);
+        const r1 = parseFloat(updated.nine1.rating);
+        const r2 = parseFloat(updated.nine2.rating);
+        if (!isNaN(s1) && !isNaN(s2)) {
+          updated.slope = String(Math.round((s1 + s2) / 2));
+        }
+        if (!isNaN(r1) && !isNaN(r2)) {
+          updated.rating = String(Math.round((r1 + r2) * 10) / 10);
+        }
+        return updated;
+      })
+    );
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -242,32 +286,89 @@ export default function CourseForm() {
                     className={inputClass}
                   />
                 </div>
-                <div>
-                  <label className="mb-1 block text-xs text-gray-500">
-                    Slope
-                  </label>
-                  <input
-                    type="number"
-                    value={tee.slope}
-                    onChange={(e) => updateTee(i, "slope", e.target.value)}
-                    placeholder="131"
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-gray-500">
-                    Rating
-                  </label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={tee.rating}
-                    onChange={(e) => updateTee(i, "rating", e.target.value)}
-                    placeholder="72.4"
-                    className={inputClass}
-                  />
-                </div>
+                {!tee.combineNines && (
+                  <>
+                    <div>
+                      <label className="mb-1 block text-xs text-gray-500">
+                        Slope
+                      </label>
+                      <input
+                        type="number"
+                        value={tee.slope}
+                        onChange={(e) => updateTee(i, "slope", e.target.value)}
+                        placeholder="131"
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-xs text-gray-500">
+                        Rating
+                      </label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={tee.rating}
+                        onChange={(e) => updateTee(i, "rating", e.target.value)}
+                        placeholder="72.4"
+                        className={inputClass}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
+              {holes === 18 && (
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => toggleCombineNines(i)}
+                    className={`text-xs font-medium ${
+                      tee.combineNines
+                        ? "text-green-700"
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    {tee.combineNines ? "- Use single slope/rating" : "+ Combine from two 9s"}
+                  </button>
+                  {tee.combineNines && (
+                    <div className="mt-2 space-y-2">
+                      {(["nine1", "nine2"] as const).map((nine, idx) => (
+                        <div key={nine} className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="mb-1 block text-xs text-gray-500">
+                              {idx === 0 ? "First" : "Second"} 9 Slope
+                            </label>
+                            <input
+                              type="number"
+                              value={tee[nine].slope}
+                              onChange={(e) => updateNine(i, nine, "slope", e.target.value)}
+                              placeholder="113"
+                              className={inputClass}
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs text-gray-500">
+                              {idx === 0 ? "First" : "Second"} 9 Rating
+                            </label>
+                            <input
+                              type="number"
+                              step="0.1"
+                              value={tee[nine].rating}
+                              onChange={(e) => updateNine(i, nine, "rating", e.target.value)}
+                              placeholder="35.2"
+                              className={inputClass}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                      {tee.slope && tee.rating && (
+                        <div className="rounded bg-green-50 px-3 py-2 text-sm text-green-800">
+                          Combined: Slope {tee.slope} / Rating {tee.rating}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
