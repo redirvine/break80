@@ -32,7 +32,7 @@ export default function Header() {
             Stats
           </Link>
           <a
-            href="https://www.usga.org/content/usga/home-page/rules-hub/rules-modernization/text/2019-rules-of-golf.html"
+            href="https://rules.usga.org/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-600"
