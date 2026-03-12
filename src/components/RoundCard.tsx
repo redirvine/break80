@@ -19,7 +19,7 @@ export default function RoundCard({ round }: RoundCardProps) {
   return (
     <Link
       href={`/rounds/${round.id}`}
-      className="block rounded-lg border border-gray-200 bg-white p-4 transition hover:shadow-md"
+      className="block rounded-lg border border-gray-200 bg-white p-4 transition hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
     >
       <div className="flex items-center justify-between">
         <div>
@@ -31,7 +31,7 @@ export default function RoundCard({ round }: RoundCardProps) {
               </span>
             )}
           </div>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {new Date(round.date_played + "T00:00:00").toLocaleDateString(
               "en-US",
               {
@@ -51,7 +51,7 @@ export default function RoundCard({ round }: RoundCardProps) {
             <Link
               href={`/rounds/${round.id}/edit`}
               onClick={(e) => e.stopPropagation()}
-              className="rounded border border-green-600 px-2 py-0.5 text-xs font-medium text-green-600 hover:bg-green-50"
+              className="rounded border border-green-600 px-2 py-0.5 text-xs font-medium text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30"
             >
               Edit
             </Link>
@@ -59,14 +59,14 @@ export default function RoundCard({ round }: RoundCardProps) {
           <div className="text-right">
             <div
               className={`text-2xl font-bold ${
-                isUnder80 ? "text-green-600" : "text-gray-900"
+                isUnder80 ? "text-green-600" : "text-gray-900 dark:text-gray-100"
               }`}
             >
               {round.score}
             </div>
             {vsParDisplay !== null && (
               <div className={`text-xs font-medium ${
-                vsPar! < 0 ? "text-green-600" : vsPar! > 0 ? "text-red-500" : "text-gray-500"
+                vsPar! < 0 ? "text-green-600" : vsPar! > 0 ? "text-red-500" : "text-gray-500 dark:text-gray-400"
               }`}>
                 {vsParDisplay}
               </div>
@@ -83,7 +83,7 @@ export default function RoundCard({ round }: RoundCardProps) {
         </div>
       )}
       {round.notes && (
-        <p className="mt-2 line-clamp-2 text-sm text-gray-600">
+        <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
           {round.notes}
         </p>
       )}
