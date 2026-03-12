@@ -36,22 +36,14 @@ export default function Header() {
               Add Round
             </Link>
           )}
-          {!loading &&
-            (user ? (
-              <button
-                onClick={handleLogout}
-                className="rounded bg-gray-100 px-3 py-1 hover:bg-gray-200"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                href="/login"
-                className="rounded bg-green-600 px-3 py-1 text-white hover:bg-green-700"
-              >
-                Login
-              </Link>
-            ))}
+          {!loading && user && (
+            <button
+              onClick={handleLogout}
+              className="rounded bg-gray-100 px-3 py-1 hover:bg-gray-200"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </nav>
     </header>
