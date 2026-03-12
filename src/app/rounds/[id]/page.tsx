@@ -4,6 +4,7 @@ import { Round } from "@/lib/types";
 import Link from "next/link";
 import DeleteRoundButton from "@/components/DeleteRoundButton";
 import EditRoundLink from "@/components/EditRoundLink";
+import ClickableImage from "@/components/ClickableImage";
 
 export const dynamic = "force-dynamic";
 
@@ -176,7 +177,7 @@ export default async function RoundDetailPage({
             <h2 className="mb-2 text-sm font-semibold text-gray-500">
               Scorecard
             </h2>
-            <img
+            <ClickableImage
               src={round.image_url}
               alt={`Scorecard from ${round.course_name}`}
               className="w-full rounded-lg border border-gray-200"

@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/AuthProvider";
 import { Round } from "@/lib/types";
+import ImageViewer from "@/components/ImageViewer";
 
 type SortKey = "date" | "score" | "course";
 type SortDir = "asc" | "desc";
@@ -35,6 +36,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(
     rounds.length > 0 ? rounds[0].id : null
   );
+  const [viewImage, setViewImage] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -221,7 +223,8 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               <img
                 src={selected.image_url}
                 alt={`Scorecard from ${selected.course_name}`}
-                className="mb-3 w-full rounded-lg border border-gray-200 dark:border-gray-700"
+                className="mb-3 w-full cursor-pointer rounded-lg border border-gray-200 hover:opacity-80 dark:border-gray-700"
+                onClick={() => setViewImage(selected.image_url)}
               />
             )}
 
@@ -301,6 +304,14 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
           </tbody>
         </table>
       </div>
+
+      {viewImage && (
+        <ImageViewer
+          src={viewImage}
+          alt="Scorecard"
+          onClose={() => setViewImage(null)}
+        />
+      )}
     </div>
   );
 }
