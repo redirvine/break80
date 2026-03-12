@@ -46,7 +46,7 @@ export default async function CoursesPage() {
                   {[course.city, course.state].filter(Boolean).join(", ")}
                 </div>
               )}
-              <TeeTable tees={course.tees} />
+              <TeeTable tees={course.tees} courseHoles={course.holes} />
             </div>
           ))}
         </div>

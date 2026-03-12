@@ -4,7 +4,7 @@ import { Tee } from "@/lib/types";
 import { useAuth } from "./AuthProvider";
 import TeeRow from "./TeeRow";
 
-export default function TeeTable({ tees }: { tees: Tee[] }) {
+export default function TeeTable({ tees, courseHoles = 18 }: { tees: Tee[]; courseHoles?: 9 | 18 }) {
   const { user } = useAuth();
 
   if (tees.length === 0) return null;
@@ -24,7 +24,7 @@ export default function TeeTable({ tees }: { tees: Tee[] }) {
         </thead>
         <tbody>
           {tees.map((tee) => (
-            <TeeRow key={tee.id} tee={tee} />
+            <TeeRow key={tee.id} tee={tee} courseHoles={courseHoles} />
           ))}
         </tbody>
       </table>
