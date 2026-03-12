@@ -124,7 +124,7 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
         )}
 
         {/* Score line */}
-        <path d={line} fill="none" stroke="#111" strokeWidth="2" />
+        <path d={line} fill="none" stroke="#9ca3af" strokeWidth="2" />
 
         {/* Data points */}
         {sorted.map((r, i) => (
@@ -133,7 +133,7 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
               cx={x(i)}
               cy={y(r.score)}
               r={hover === i ? 5 : 3.5}
-              fill={r.score < 80 ? "#16a34a" : "#111"}
+              fill={r.score < 80 ? "#16a34a" : "#9ca3af"}
               stroke="white"
               strokeWidth="1.5"
               onMouseEnter={() => setHover(i)}
