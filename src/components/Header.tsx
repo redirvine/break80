@@ -17,9 +17,14 @@ export default function Header() {
   return (
     <header className="border-b border-gray-200 bg-white">
       <nav className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          break<span className="text-green-600">80</span>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-xl font-bold tracking-tight">
+            break<span className="text-green-600">80</span>
+          </Link>
+          <span className="hidden text-sm italic text-gray-400 sm:inline">
+            The journey of an average golfer to break 80
+          </span>
+        </div>
         <div className="flex items-center gap-4 text-sm">
           {!loading && user && (
             <Link href="/rounds" className="hover:text-green-600">
