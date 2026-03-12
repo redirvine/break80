@@ -172,7 +172,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               </div>
             </div>
 
-            {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.total_putts != null || selected.penalties != null) && (
+            {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.fairways_hit != null || selected.total_putts != null || selected.penalties != null) && (
               <div className="mb-3 flex flex-wrap justify-center gap-3 rounded bg-gray-50 p-2 text-center text-xs">
                 {selected.birdies != null && (
                   <div>
@@ -190,6 +190,12 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                   <div>
                     <div className="font-semibold">{selected.gir}</div>
                     <div className="text-gray-500">GIR</div>
+                  </div>
+                )}
+                {selected.fairways_hit != null && (
+                  <div>
+                    <div className="font-semibold">{selected.fairways_hit}</div>
+                    <div className="text-gray-500">Fairways</div>
                   </div>
                 )}
                 {selected.total_putts != null && (

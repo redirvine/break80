@@ -30,6 +30,7 @@ export interface Round {
   birdies: number | null;
   pars: number | null;
   gir: number | null;
+  fairways_hit: number | null;
   total_putts: number | null;
   penalties: number | null;
   transport: "walk" | "cart";

@@ -107,6 +107,8 @@ export default function RoundForm({ round }: RoundFormProps) {
     const parsVal = parsRaw ? parseInt(parsRaw, 10) : null;
     const girRaw = form.get("gir") as string;
     const gir = girRaw ? parseInt(girRaw, 10) : null;
+    const fairwaysRaw = form.get("fairways_hit") as string;
+    const fairwaysHit = fairwaysRaw ? parseInt(fairwaysRaw, 10) : null;
     const totalPuttsRaw = form.get("total_putts") as string;
     const totalPutts = totalPuttsRaw ? parseInt(totalPuttsRaw, 10) : null;
     const penaltiesRaw = form.get("penalties") as string;
@@ -164,6 +166,7 @@ export default function RoundForm({ round }: RoundFormProps) {
       birdies: isNaN(birdies as number) ? null : birdies,
       pars: isNaN(parsVal as number) ? null : parsVal,
       gir: isNaN(gir as number) ? null : gir,
+      fairways_hit: isNaN(fairwaysHit as number) ? null : fairwaysHit,
       total_putts: isNaN(totalPutts as number) ? null : totalPutts,
       penalties: isNaN(penalties as number) ? null : penalties,
       notes,
@@ -355,7 +358,7 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
         <div>
           <label htmlFor="birdies" className="mb-1 block text-sm font-medium">
             Birdies
@@ -398,6 +401,21 @@ export default function RoundForm({ round }: RoundFormProps) {
             max={18}
             defaultValue={round?.gir ?? ""}
             placeholder="0-18"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="fairways_hit" className="mb-1 block text-sm font-medium">
+            Fairways
+          </label>
+          <input
+            type="number"
+            id="fairways_hit"
+            name="fairways_hit"
+            min={0}
+            max={18}
+            defaultValue={round?.fairways_hit ?? ""}
+            placeholder="0-14"
             className={inputClass}
           />
         </div>

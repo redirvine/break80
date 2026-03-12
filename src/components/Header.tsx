@@ -26,6 +26,9 @@ export default function Header() {
           </span>
         </div>
         <div className="flex items-center gap-4 text-sm">
+          <Link href="/stats" className="hover:text-green-600">
+            Stats
+          </Link>
           {!loading && user && (
             <Link href="/rounds" className="hover:text-green-600">
               Rounds
