@@ -18,10 +18,10 @@ export default async function HomePage() {
   return (
     <div className="space-y-8">
       <div className="grid gap-6 sm:grid-cols-3">
-        <RollingBest rounds={allRounds} />
         <div className="sm:col-span-2">
           <ScoreDistribution rounds={allRounds} />
         </div>
+        <RollingBest rounds={allRounds} />
       </div>
 
       <RoundsMasterDetail rounds={allRounds} />

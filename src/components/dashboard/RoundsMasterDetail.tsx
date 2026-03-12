@@ -73,7 +73,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+    <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
       {/* Detail panel */}
       <div className="order-1 lg:order-none">
         {selected ? (
@@ -199,7 +199,6 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               >
                 Score{sortArrow("score")}
               </th>
-              <th className="px-3 py-2 text-right">vs Par</th>
               <th className="px-3 py-2 text-right">vs 79</th>
             </tr>
           </thead>
@@ -215,13 +214,8 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                 <td className="whitespace-nowrap px-3 py-2 text-gray-600">
                   {formatDate(r.date_played)}
                 </td>
-                <td className="px-3 py-2">
-                  <span className="font-medium">{r.course_name}</span>
-                  {r.tee && (
-                    <span className="ml-1 text-xs text-gray-400">
-                      {r.tee.tee_name}
-                    </span>
-                  )}
+                <td className="max-w-[120px] truncate px-3 py-2 font-medium" title={r.course_name}>
+                  {r.course_name}
                 </td>
                 <td
                   className={`px-3 py-2 text-right font-bold ${
@@ -229,11 +223,6 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                   }`}
                 >
                   {r.score}
-                </td>
-                <td
-                  className={`px-3 py-2 text-right text-xs font-medium ${vsParColor(r)}`}
-                >
-                  {vsParDisplay(r) ?? "—"}
                 </td>
                 <td
                   className={`px-3 py-2 text-right text-xs font-medium ${
