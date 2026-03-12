@@ -44,7 +44,7 @@ export default async function RoundDetailPage({
         </div>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold">{round.course_name}</h1>
@@ -87,7 +87,7 @@ export default async function RoundDetailPage({
         </div>
 
         {round.tee && (
-          <div className="mt-4 rounded-lg bg-gray-50 p-4">
+          <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
             <h2 className="mb-2 text-sm font-semibold text-gray-500">
               Tee Info
             </h2>
@@ -119,7 +119,7 @@ export default async function RoundDetailPage({
         )}
 
         {(round.birdies !== null || round.pars !== null || round.gir !== null || round.fairways_hit !== null || round.total_putts !== null || round.penalties !== null) && (
-          <div className="mt-4 rounded-lg bg-gray-50 p-4">
+          <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
             <h2 className="mb-2 text-sm font-semibold text-gray-500">
               Round Stats
             </h2>

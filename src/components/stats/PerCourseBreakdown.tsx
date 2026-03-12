@@ -47,14 +47,14 @@ export default function PerCourseBreakdown({ rounds }: { rounds: Round[] }) {
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="mb-4 text-sm font-semibold text-gray-700">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <h2 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
         Per-Course Breakdown
       </h2>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-200 text-left text-xs font-semibold text-gray-500">
+            <tr className="border-b border-gray-200 text-left text-xs font-semibold text-gray-500 dark:border-gray-700 dark:text-gray-400">
               <th className="pb-2 pr-4">Course</th>
               <th className="pb-2 px-2 text-right">Rounds</th>
               <th className="pb-2 px-2 text-right">Best</th>
@@ -64,9 +64,9 @@ export default function PerCourseBreakdown({ rounds }: { rounds: Round[] }) {
           </thead>
           <tbody>
             {stats.map((s) => (
-              <tr key={s.name} className="border-b border-gray-100">
+              <tr key={s.name} className="border-b border-gray-100 dark:border-gray-700">
                 <td className="py-2 pr-4 font-medium">{s.name}</td>
-                <td className="py-2 px-2 text-right text-gray-500">
+                <td className="py-2 px-2 text-right text-gray-500 dark:text-gray-400">
                   {s.rounds}
                 </td>
                 <td

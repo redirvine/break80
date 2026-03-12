@@ -27,7 +27,7 @@ function vsParColor(round: Round) {
   const par = round.tee?.par;
   if (!par) return "";
   const diff = round.score - par;
-  return diff < 0 ? "text-green-600" : diff > 0 ? "text-red-500" : "text-gray-500";
+  return diff < 0 ? "text-green-600" : diff > 0 ? "text-red-500" : "text-gray-500 dark:text-gray-400";
 }
 
 export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
@@ -109,13 +109,13 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
         onTouchEnd={handleTouchEnd}
       >
         {selected ? (
-          <div className="sticky top-4 rounded-lg border border-gray-200 bg-white p-4">
+          <div className="sticky top-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
             <div className="mb-3 flex items-center justify-between">
               <button
                 type="button"
                 onClick={goPrev}
                 disabled={currentIndex <= 0}
-                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20"
+                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20 dark:hover:text-gray-200"
                 aria-label="Previous round"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -129,7 +129,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                 type="button"
                 onClick={goNext}
                 disabled={currentIndex >= sorted.length - 1}
-                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20"
+                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20 dark:hover:text-gray-200"
                 aria-label="Next round"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -140,7 +140,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
             <div className="mb-3 flex items-start justify-between">
               <div>
                 <div className="font-semibold">{selected.course_name}</div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-500 dark:text-gray-400">
                   {new Date(selected.date_played + "T00:00:00").toLocaleDateString(
                     "en-US",
                     { weekday: "long", month: "long", day: "numeric", year: "numeric" }
@@ -154,7 +154,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               <div className="text-right">
                 <div
                   className={`text-3xl font-bold ${
-                    selected.score < 80 ? "text-green-600" : "text-gray-900"
+                    selected.score < 80 ? "text-green-600" : "text-gray-900 dark:text-gray-100"
                   }`}
                 >
                   {selected.score}
@@ -173,93 +173,93 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
             </div>
 
             {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.fairways_hit != null || selected.total_putts != null || selected.penalties != null) && (
-              <div className="mb-3 flex flex-wrap justify-center gap-3 rounded bg-gray-50 p-2 text-center text-xs">
+              <div className="mb-3 flex flex-wrap justify-center gap-3 rounded bg-gray-50 p-2 text-center text-xs dark:bg-gray-700">
                 {selected.birdies != null && (
                   <div>
                     <div className="font-semibold">{selected.birdies}</div>
-                    <div className="text-gray-500">Birdies</div>
+                    <div className="text-gray-500 dark:text-gray-400">Birdies</div>
                   </div>
                 )}
                 {selected.pars != null && (
                   <div>
                     <div className="font-semibold">{selected.pars}</div>
-                    <div className="text-gray-500">Pars</div>
+                    <div className="text-gray-500 dark:text-gray-400">Pars</div>
                   </div>
                 )}
                 {selected.gir != null && (
                   <div>
                     <div className="font-semibold">{selected.gir}</div>
-                    <div className="text-gray-500">GIR</div>
+                    <div className="text-gray-500 dark:text-gray-400">GIR</div>
                   </div>
                 )}
                 {selected.fairways_hit != null && (
                   <div>
                     <div className="font-semibold">{selected.fairways_hit}</div>
-                    <div className="text-gray-500">Fairways</div>
+                    <div className="text-gray-500 dark:text-gray-400">Fairways</div>
                   </div>
                 )}
                 {selected.total_putts != null && (
                   <div>
                     <div className="font-semibold">{selected.total_putts}</div>
-                    <div className="text-gray-500">Putts</div>
+                    <div className="text-gray-500 dark:text-gray-400">Putts</div>
                   </div>
                 )}
                 {selected.penalties != null && (
                   <div>
                     <div className="font-semibold">{selected.penalties}</div>
-                    <div className="text-gray-500">Penalties</div>
+                    <div className="text-gray-500 dark:text-gray-400">Penalties</div>
                   </div>
                 )}
               </div>
             )}
 
             {selected.notes && (
-              <p className="mb-3 text-sm text-gray-600">{selected.notes}</p>
+              <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">{selected.notes}</p>
             )}
 
             {selected.image_url && (
               <img
                 src={selected.image_url}
                 alt={`Scorecard from ${selected.course_name}`}
-                className="mb-3 w-full rounded-lg border border-gray-200"
+                className="mb-3 w-full rounded-lg border border-gray-200 dark:border-gray-700"
               />
             )}
 
             {user && (
               <Link
                 href={`/rounds/${selected.id}/edit`}
-                className="block rounded-lg border border-green-600 px-3 py-1.5 text-center text-sm font-medium text-green-600 hover:bg-green-50"
+                className="block rounded-lg border border-green-600 px-3 py-1.5 text-center text-sm font-medium text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30"
               >
                 Edit Round
               </Link>
             )}
           </div>
         ) : (
-          <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-sm text-gray-400">
+          <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-sm text-gray-400 dark:border-gray-700 dark:bg-gray-800">
             Select a round
           </div>
         )}
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-500">
+            <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <th
-                className="cursor-pointer px-3 py-2 hover:text-gray-700"
+                className="cursor-pointer px-3 py-2 hover:text-gray-700 dark:hover:text-gray-200"
                 onClick={() => handleSort("date")}
               >
                 Date{sortArrow("date")}
               </th>
               <th
-                className="cursor-pointer px-3 py-2 hover:text-gray-700"
+                className="cursor-pointer px-3 py-2 hover:text-gray-700 dark:hover:text-gray-200"
                 onClick={() => handleSort("course")}
               >
                 Course{sortArrow("course")}
               </th>
               <th
-                className="cursor-pointer px-3 py-2 text-right hover:text-gray-700"
+                className="cursor-pointer px-3 py-2 text-right hover:text-gray-700 dark:hover:text-gray-200"
                 onClick={() => handleSort("score")}
               >
                 Score{sortArrow("score")}
@@ -272,11 +272,11 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               <tr
                 key={r.id}
                 onClick={() => setSelectedId(r.id)}
-                className={`cursor-pointer border-b border-gray-100 transition-colors hover:bg-green-50 ${
-                  selectedId === r.id ? "bg-green-50" : ""
+                className={`cursor-pointer border-b border-gray-100 transition-colors hover:bg-green-50 dark:border-gray-700 dark:hover:bg-green-900/20 ${
+                  selectedId === r.id ? "bg-green-50 dark:bg-green-900/20" : ""
                 }`}
               >
-                <td className="whitespace-nowrap px-3 py-2 text-gray-600">
+                <td className="whitespace-nowrap px-3 py-2 text-gray-600 dark:text-gray-400">
                   {formatDate(r.date_played)}
                 </td>
                 <td className="max-w-[120px] truncate px-3 py-2 font-medium" title={r.course_name}>
@@ -291,7 +291,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                 </td>
                 <td
                   className={`px-3 py-2 text-right text-xs font-medium ${
-                    r.score < 80 ? "text-green-600" : r.score === 80 ? "text-yellow-500" : "text-gray-500"
+                    r.score < 80 ? "text-green-600" : r.score === 80 ? "text-yellow-500" : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   {r.score < 80 ? `${r.score - 79}` : `+${r.score - 79}`}

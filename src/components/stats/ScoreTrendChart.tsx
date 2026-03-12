@@ -19,8 +19,8 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
 
   if (sorted.length < 2) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <h2 className="mb-2 text-sm font-semibold text-gray-700">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
           Score Trend
         </h2>
         <div className="py-8 text-center text-sm text-gray-400">
@@ -72,8 +72,8 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
   const show79 = yMin <= 79 && yMax >= 79;
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="mb-4 text-sm font-semibold text-gray-700">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <h2 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
         Score Trend (last {sorted.length} rounds)
       </h2>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
@@ -85,14 +85,14 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
               y1={y(v)}
               x2={W - PR}
               y2={y(v)}
-              stroke="#e5e7eb"
+              stroke="#d1d5db"
               strokeWidth="1"
             />
             <text
               x={PL - 6}
               y={y(v) + 4}
               textAnchor="end"
-              className="fill-gray-400"
+              className="fill-gray-400 dark:fill-gray-500"
               fontSize="10"
             >
               {v}
@@ -171,7 +171,7 @@ export default function ScoreTrendChart({ rounds }: { rounds: Round[] }) {
             x={x(i)}
             y={H - 4}
             textAnchor="middle"
-            className="fill-gray-400"
+            className="fill-gray-400 dark:fill-gray-500"
             fontSize="9"
           >
             {new Date(sorted[i].date_played + "T00:00:00").toLocaleDateString(

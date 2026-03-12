@@ -11,8 +11,8 @@ export default function ScoreDistribution({ rounds }: { rounds: Round[] }) {
 
   return (
     <div className="space-y-2">
-      <h2 className="text-sm font-semibold text-gray-700">Score Distribution</h2>
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Score Distribution</h2>
+      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
         {!hasRounds ? (
           <div className="py-4 text-center text-sm text-gray-400">
             No rounds yet
@@ -31,7 +31,7 @@ export default function ScoreDistribution({ rounds }: { rounds: Round[] }) {
                     onMouseLeave={() => setHover(null)}
                   >
                     {hover === b.band && (
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white">
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white dark:bg-gray-600">
                         {b.count} ({Math.round(b.pct)}%)
                       </div>
                     )}
@@ -40,7 +40,7 @@ export default function ScoreDistribution({ rounds }: { rounds: Round[] }) {
             </div>
             <div className="mt-3 flex flex-wrap gap-3">
               {bands.map((b) => (
-                <div key={b.band} className="flex items-center gap-1.5 text-xs text-gray-600">
+                <div key={b.band} className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
                   <div className={`h-2.5 w-2.5 rounded-full ${b.color}`} />
                   {b.band}
                 </div>

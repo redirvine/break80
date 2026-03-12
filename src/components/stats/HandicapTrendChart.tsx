@@ -10,8 +10,8 @@ export default function HandicapTrendChart({ rounds }: { rounds: Round[] }) {
 
   if (history.length < 2) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <h2 className="mb-2 text-sm font-semibold text-gray-700">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
           Handicap Trend
         </h2>
         <div className="py-8 text-center text-sm text-gray-400">
@@ -59,8 +59,8 @@ export default function HandicapTrendChart({ rounds }: { rounds: Round[] }) {
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="mb-4 text-sm font-semibold text-gray-700">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <h2 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
         Handicap Trend
       </h2>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
@@ -78,7 +78,7 @@ export default function HandicapTrendChart({ rounds }: { rounds: Round[] }) {
               x={PL - 6}
               y={y(v) + 4}
               textAnchor="end"
-              className="fill-gray-400"
+              className="fill-gray-400 dark:fill-gray-500"
               fontSize="10"
             >
               {v.toFixed(1)}
@@ -131,7 +131,7 @@ export default function HandicapTrendChart({ rounds }: { rounds: Round[] }) {
             x={x(i)}
             y={H - 4}
             textAnchor="middle"
-            className="fill-gray-400"
+            className="fill-gray-400 dark:fill-gray-500"
             fontSize="9"
           >
             {history[i].date}

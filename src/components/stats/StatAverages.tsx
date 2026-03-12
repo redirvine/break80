@@ -60,15 +60,15 @@ export default function StatAverages({ rounds }: { rounds: Round[] }) {
   ];
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="mb-4 text-sm font-semibold text-gray-700">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <h2 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
         Averages (18-hole rounds)
       </h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <div className="text-2xl font-bold text-gray-900">{s.value}</div>
-            <div className="text-xs font-medium text-gray-600">{s.label}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{s.value}</div>
+            <div className="text-xs font-medium text-gray-600 dark:text-gray-400">{s.label}</div>
             <div className="text-xs text-gray-400">{s.sub}</div>
           </div>
         ))}

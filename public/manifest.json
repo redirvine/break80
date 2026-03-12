@@ -1,0 +1,17 @@
+{
+  "name": "break80 - Golf Score Tracker",
+  "short_name": "break80",
+  "description": "Chronicling the journey to breaking 80",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8faf8",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

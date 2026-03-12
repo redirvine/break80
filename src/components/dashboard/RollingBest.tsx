@@ -15,23 +15,23 @@ export default function RollingBest({ rounds }: { rounds: Round[] }) {
 
   return (
     <div className="space-y-2">
-      <h2 className="text-sm font-semibold text-gray-700">Rolling Best</h2>
+      <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Rolling Best</h2>
       <div className="grid grid-cols-3 gap-3">
         {windows.map((w) => (
           <div
             key={w.label}
-            className="rounded-lg border border-gray-200 bg-white p-4 text-center"
+            className="rounded-lg border border-gray-200 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
           >
             <div
               className={`text-2xl font-bold ${
                 w.value !== null && w.value === best
                   ? "text-green-600"
-                  : "text-gray-900"
+                  : "text-gray-900 dark:text-gray-100"
               }`}
             >
               {w.value ?? "---"}
             </div>
-            <div className="mt-1 text-xs text-gray-500">{w.label}</div>
+            <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">{w.label}</div>
           </div>
         ))}
       </div>
