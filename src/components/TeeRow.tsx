@@ -53,11 +53,11 @@ export default function TeeRow({ tee }: { tee: Tee }) {
   }
 
   const inputClass =
-    "w-full rounded border border-gray-300 px-2 py-1 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500";
+    "w-full rounded border border-gray-300 px-2 py-1 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100";
 
   if (editing) {
     return (
-      <tr className="border-b last:border-0">
+      <tr className="border-b last:border-0 dark:border-gray-700">
         <td className="py-1 pr-2">
           <input value={teeName} onChange={(e) => setTeeName(e.target.value)} className={inputClass} />
         </td>
@@ -84,7 +84,7 @@ export default function TeeRow({ tee }: { tee: Tee }) {
             </button>
             <button
               onClick={handleCancel}
-              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200"
+              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               Cancel
             </button>
@@ -96,7 +96,7 @@ export default function TeeRow({ tee }: { tee: Tee }) {
 
   if (deleting) {
     return (
-      <tr className="border-b last:border-0 bg-red-50">
+      <tr className="border-b last:border-0 bg-red-50 dark:border-gray-700 dark:bg-red-900/20">
         <td className="py-1" colSpan={6}>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-500">Delete &ldquo;{tee.tee_name}&rdquo;?</span>
@@ -109,7 +109,7 @@ export default function TeeRow({ tee }: { tee: Tee }) {
             </button>
             <button
               onClick={handleCancel}
-              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200"
+              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               Cancel
             </button>
@@ -120,7 +120,7 @@ export default function TeeRow({ tee }: { tee: Tee }) {
   }
 
   return (
-    <tr className="border-b last:border-0">
+    <tr className="border-b last:border-0 dark:border-gray-700">
       <td className="py-1">{tee.tee_name}</td>
       <td className="py-1">{tee.yardage ?? "—"}</td>
       <td className="py-1">{tee.par ?? "—"}</td>
@@ -131,13 +131,13 @@ export default function TeeRow({ tee }: { tee: Tee }) {
           <div className="flex gap-1">
             <button
               onClick={() => setEditing(true)}
-              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200"
+              className="rounded bg-gray-100 px-2 py-1 text-xs hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               Edit
             </button>
             <button
               onClick={() => setDeleting(true)}
-              className="rounded bg-red-50 px-2 py-1 text-xs text-red-600 hover:bg-red-100"
+              className="rounded bg-red-50 px-2 py-1 text-xs text-red-600 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
             >
               Delete
             </button>

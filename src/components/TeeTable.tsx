@@ -13,7 +13,7 @@ export default function TeeTable({ tees }: { tees: Tee[] }) {
     <div className="mt-3">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b text-left text-gray-500">
+          <tr className="border-b text-left text-gray-500 dark:border-gray-700 dark:text-gray-400">
             <th className="pb-1 font-medium">Tee</th>
             <th className="pb-1 font-medium">Yardage</th>
             <th className="pb-1 font-medium">Par</th>
