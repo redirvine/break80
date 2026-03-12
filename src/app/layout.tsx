@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "break80 - Golf Score Tracker",
   description: "Chronicling the journey to breaking 80",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({
