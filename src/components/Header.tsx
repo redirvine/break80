@@ -31,14 +31,6 @@ export default function Header() {
           <Link href="/stats" className="hover:text-green-600">
             Stats
           </Link>
-          <a
-            href="https://rules.usga.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-green-600"
-          >
-            Rules
-          </a>
           {!loading && user && (
             <Link href="/rounds" className="hover:text-green-600">
               Rounds
