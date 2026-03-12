@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
-import "cropperjs/dist/cropper.css";
 
 interface ImageCropperProps {
   imageSrc: string;
@@ -35,6 +34,7 @@ export default function ImageCropper({
 
   return (
     <div className="space-y-3">
+      <link rel="stylesheet" href="/cropper.min.css" />
       <Cropper
         ref={cropperRef}
         src={imageSrc}
