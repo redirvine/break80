@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/AuthProvider";
 import { Round } from "@/lib/types";
@@ -64,6 +64,34 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
   }, [rounds, sortKey, sortDir]);
 
   const selected = rounds.find((r) => r.id === selectedId) ?? null;
+  const currentIndex = sorted.findIndex((r) => r.id === selectedId);
+
+  const goNext = useCallback(() => {
+    if (currentIndex < sorted.length - 1) {
+      setSelectedId(sorted[currentIndex + 1].id);
+    }
+  }, [currentIndex, sorted]);
+
+  const goPrev = useCallback(() => {
+    if (currentIndex > 0) {
+      setSelectedId(sorted[currentIndex - 1].id);
+    }
+  }, [currentIndex, sorted]);
+
+  const touchStartX = useRef<number | null>(null);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(diff) < 50) return;
+    if (diff > 0) goPrev();
+    else goNext();
+  }
 
   const sortArrow = (key: SortKey) =>
     sortKey === key ? (sortDir === "asc" ? " \u25B2" : " \u25BC") : "";
@@ -75,9 +103,40 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
       {/* Detail panel */}
-      <div className="order-1 lg:order-none">
+      <div
+        className="order-1 lg:order-none"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {selected ? (
           <div className="sticky top-4 rounded-lg border border-gray-200 bg-white p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={goPrev}
+                disabled={currentIndex <= 0}
+                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20"
+                aria-label="Previous round"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <span className="text-xs text-gray-400">
+                {currentIndex + 1} / {sorted.length}
+              </span>
+              <button
+                type="button"
+                onClick={goNext}
+                disabled={currentIndex >= sorted.length - 1}
+                className="rounded p-1 text-gray-400 hover:text-gray-700 disabled:opacity-20"
+                aria-label="Next round"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
             <div className="mb-3 flex items-start justify-between">
               <div>
                 <div className="font-semibold">{selected.course_name}</div>
