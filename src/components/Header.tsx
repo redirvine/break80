@@ -54,11 +54,6 @@ export default function Header() {
               Add Round
             </Link>
           )}
-          {!loading && user && (
-            <Link href="/quick-add" className="hover:text-green-600">
-              Quick Add
-            </Link>
-          )}
           <button
             onClick={toggle}
             className="rounded p-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
