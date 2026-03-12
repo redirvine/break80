@@ -451,17 +451,30 @@ export default function RoundForm({ round }: RoundFormProps) {
         <label className="mb-1 block text-sm font-medium">
           Scorecard Image
         </label>
-        {isEdit && round.image_url && !croppedPreview && (
-          <p className="mb-1 text-xs text-gray-500">
-            Current image will be kept unless you select a new one.
-          </p>
+        {isEdit && round.image_url && !cropSrc && !croppedPreview && (
+          <div className="mt-2">
+            <img
+              src={round.image_url}
+              alt="Current scorecard"
+              className="mb-2 w-full rounded-lg border border-gray-200"
+            />
+            <button
+              type="button"
+              onClick={() => setCropSrc(round.image_url!)}
+              className="rounded border border-green-600 px-3 py-1 text-xs font-medium text-green-600 hover:bg-green-50"
+            >
+              Crop / Rotate
+            </button>
+          </div>
         )}
         <input
           type="file"
           ref={fileInputRef}
           accept="image/*"
           onChange={handleFileSelect}
-          className="w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-green-700 hover:file:bg-green-100"
+          className={`w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-green-700 hover:file:bg-green-100 ${
+            isEdit && round.image_url && !cropSrc && !croppedPreview ? "mt-2" : ""
+          }`}
         />
         {cropSrc && (
           <div className="mt-3">
