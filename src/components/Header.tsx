@@ -78,6 +78,14 @@ export default function Header() {
               Logout
             </button>
           )}
+          {!loading && !user && (
+            <Link
+              href="/login"
+              className="rounded bg-green-600 px-3 py-1 text-white hover:bg-green-700"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </nav>
     </header>
