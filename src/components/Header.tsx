@@ -21,9 +21,11 @@ export default function Header() {
           break<span className="text-green-600">80</span>
         </Link>
         <div className="flex items-center gap-4 text-sm">
-          <Link href="/rounds" className="hover:text-green-600">
-            Rounds
-          </Link>
+          {!loading && user && (
+            <Link href="/rounds" className="hover:text-green-600">
+              Rounds
+            </Link>
+          )}
           {!loading && user && (
             <Link href="/courses" className="hover:text-green-600">
               Courses
