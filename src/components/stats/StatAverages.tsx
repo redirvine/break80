@@ -57,6 +57,20 @@ export default function StatAverages({ rounds }: { rounds: Round[] }) {
       ),
       sub: `${eligible.filter((r) => r.penalties != null).length} tracked`,
     },
+    {
+      label: "Scrambling %",
+      value: (() => {
+        const tracked = eligible.filter(
+          (r) => r.scrambles != null && r.gir != null
+        );
+        if (tracked.length === 0) return "---";
+        const totalScrambles = tracked.reduce((s, r) => s + r.scrambles!, 0);
+        const totalOpps = tracked.reduce((s, r) => s + (18 - r.gir!), 0);
+        if (totalOpps === 0) return "---";
+        return ((totalScrambles / totalOpps) * 100).toFixed(0) + "%";
+      })(),
+      sub: `${eligible.filter((r) => r.scrambles != null && r.gir != null).length} tracked`,
+    },
   ];
 
   return (

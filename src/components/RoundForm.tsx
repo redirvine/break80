@@ -113,6 +113,8 @@ export default function RoundForm({ round }: RoundFormProps) {
     const totalPutts = totalPuttsRaw ? parseInt(totalPuttsRaw, 10) : null;
     const penaltiesRaw = form.get("penalties") as string;
     const penalties = penaltiesRaw ? parseInt(penaltiesRaw, 10) : null;
+    const scramblesRaw = form.get("scrambles") as string;
+    const scrambles = scramblesRaw ? parseInt(scramblesRaw, 10) : null;
     const transport = form.get("transport") as string;
     const notes = (form.get("notes") as string) || null;
 
@@ -169,6 +171,7 @@ export default function RoundForm({ round }: RoundFormProps) {
       fairways_hit: isNaN(fairwaysHit as number) ? null : fairwaysHit,
       total_putts: isNaN(totalPutts as number) ? null : totalPutts,
       penalties: isNaN(penalties as number) ? null : penalties,
+      scrambles: isNaN(scrambles as number) ? null : scrambles,
       notes,
       image_url: imageUrl,
     };
@@ -358,7 +361,7 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-7">
         <div>
           <label htmlFor="birdies" className="mb-1 block text-sm font-medium">
             Birdies
@@ -446,6 +449,21 @@ export default function RoundForm({ round }: RoundFormProps) {
             max={99}
             defaultValue={round?.penalties ?? ""}
             placeholder="e.g. 2"
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="scrambles" className="mb-1 block text-sm font-medium">
+            Scrambles
+          </label>
+          <input
+            type="number"
+            id="scrambles"
+            name="scrambles"
+            min={0}
+            max={18}
+            defaultValue={round?.scrambles ?? ""}
+            placeholder="0-18"
             className={inputClass}
           />
         </div>

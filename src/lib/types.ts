@@ -33,6 +33,7 @@ export interface Round {
   fairways_hit: number | null;
   total_putts: number | null;
   penalties: number | null;
+  scrambles: number | null;
   transport: "walk" | "cart";
   course_id: string | null;
   tee_id: string | null;

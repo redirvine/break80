@@ -119,7 +119,7 @@ export default async function RoundDetailPage({
           </div>
         )}
 
-        {(round.birdies !== null || round.pars !== null || round.gir !== null || round.fairways_hit !== null || round.total_putts !== null || round.penalties !== null) && (
+        {(round.birdies !== null || round.pars !== null || round.gir !== null || round.fairways_hit !== null || round.total_putts !== null || round.penalties !== null || round.scrambles !== null) && (
           <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
             <h2 className="mb-2 text-sm font-semibold text-gray-500">
               Round Stats
@@ -159,6 +159,12 @@ export default async function RoundDetailPage({
                 <div>
                   <span className="text-gray-500">Penalties:</span>{" "}
                   <span className="font-medium">{round.penalties}</span>
+                </div>
+              )}
+              {round.scrambles !== null && (
+                <div>
+                  <span className="text-gray-500">Scrambles:</span>{" "}
+                  <span className="font-medium">{round.scrambles}</span>
                 </div>
               )}
             </div>

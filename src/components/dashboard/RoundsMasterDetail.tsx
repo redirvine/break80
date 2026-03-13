@@ -174,7 +174,7 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
               </div>
             </div>
 
-            {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.fairways_hit != null || selected.total_putts != null || selected.penalties != null) && (
+            {(selected.birdies != null || selected.pars != null || selected.gir != null || selected.fairways_hit != null || selected.total_putts != null || selected.penalties != null || selected.scrambles != null) && (
               <div className="mb-3 flex flex-wrap justify-center gap-3 rounded bg-gray-50 p-2 text-center text-xs dark:bg-gray-700">
                 {selected.birdies != null && (
                   <div>
@@ -210,6 +210,12 @@ export default function RoundsMasterDetail({ rounds }: { rounds: Round[] }) {
                   <div>
                     <div className="font-semibold">{selected.penalties}</div>
                     <div className="text-gray-500 dark:text-gray-400">Penalties</div>
+                  </div>
+                )}
+                {selected.scrambles != null && (
+                  <div>
+                    <div className="font-semibold">{selected.scrambles}</div>
+                    <div className="text-gray-500 dark:text-gray-400">Scrambles</div>
                   </div>
                 )}
               </div>
