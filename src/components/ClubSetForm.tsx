@@ -7,6 +7,7 @@ import { ClubSet } from "@/lib/types";
 const COMMON_CLUBS = [
   "Driver",
   "3W",
+  "4W",
   "5W",
   "7W",
   "2H",
