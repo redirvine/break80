@@ -17,7 +17,7 @@ export default async function RoundDetailPage({
   const supabase = createServerClient();
   const { data } = await supabase
     .from("rounds")
-    .select("*, course:courses(*), tee:tees(*)")
+    .select("*, course:courses(*), tee:tees(*), club_set:club_sets(*)")
     .eq("id", id)
     .single();
 
@@ -167,6 +167,24 @@ export default async function RoundDetailPage({
                   <span className="font-medium">{round.scrambles}</span>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {round.club_set && (
+          <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+            <h2 className="mb-2 text-sm font-semibold text-gray-500">
+              Club Set — {round.club_set.name}
+            </h2>
+            <div className="flex flex-wrap gap-1.5">
+              {round.club_set.clubs.map((club: string) => (
+                <span
+                  key={club}
+                  className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-600 dark:text-gray-300"
+                >
+                  {club}
+                </span>
+              ))}
             </div>
           </div>
         )}

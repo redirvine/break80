@@ -8,7 +8,7 @@ export default async function RoundsPage() {
   const supabase = createServerClient();
   const { data: rounds } = await supabase
     .from("rounds")
-    .select("*, course:courses(*), tee:tees(*)")
+    .select("*, course:courses(*), tee:tees(*), club_set:club_sets(*)")
     .order("date_played", { ascending: false });
 
   const allRounds: Round[] = rounds ?? [];

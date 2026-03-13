@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
-import { Course, Round, Tee } from "@/lib/types";
+import { ClubSet, Course, Round, Tee } from "@/lib/types";
 import Link from "next/link";
 import ImageCropper from "./ImageCropper";
 
@@ -17,6 +17,10 @@ export default function RoundForm({ round }: RoundFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
   const [tees, setTees] = useState<Tee[]>([]);
+  const [clubSets, setClubSets] = useState<ClubSet[]>([]);
+  const [selectedClubSetId, setSelectedClubSetId] = useState(
+    round?.club_set_id ?? ""
+  );
   const [selectedCourseId, setSelectedCourseId] = useState(
     round?.course_id ?? ""
   );
@@ -68,6 +72,11 @@ export default function RoundForm({ round }: RoundFormProps) {
       .select("*")
       .order("name")
       .then(({ data }) => setCourses(data ?? []));
+    supabase
+      .from("club_sets")
+      .select("*")
+      .order("name")
+      .then(({ data }) => setClubSets(data ?? []));
   }, []);
 
   useEffect(() => {
@@ -161,6 +170,7 @@ export default function RoundForm({ round }: RoundFormProps) {
       course_name: courseName,
       course_id: selectedCourseId,
       tee_id: selectedTeeId || null,
+      club_set_id: selectedClubSetId || null,
       score: scoreVal,
       front_nine: isNaN(frontNineVal as number) ? null : frontNineVal,
       back_nine: isNaN(backNineVal as number) ? null : backNineVal,
@@ -360,6 +370,27 @@ export default function RoundForm({ round }: RoundFormProps) {
           </label>
         </div>
       </div>
+
+      {clubSets.length > 0 && (
+        <div>
+          <label htmlFor="club_set" className="mb-1 block text-sm font-medium">
+            Club Set
+          </label>
+          <select
+            id="club_set"
+            value={selectedClubSetId}
+            onChange={(e) => setSelectedClubSetId(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">No set selected</option>
+            {clubSets.map((cs) => (
+              <option key={cs.id} value={cs.id}>
+                {cs.name} ({cs.clubs.length} clubs)
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
         <div>

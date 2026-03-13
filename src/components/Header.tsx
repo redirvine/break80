@@ -42,6 +42,11 @@ export default function Header() {
             </Link>
           )}
           {!loading && user && (
+            <Link href="/clubs" className="hover:text-green-600">
+              Clubs
+            </Link>
+          )}
+          {!loading && user && (
             <Link href="/add-round" className="hover:text-green-600">
               Add Round
             </Link>

@@ -38,6 +38,16 @@ export interface Round {
   course_id: string | null;
   tee_id: string | null;
   created_at: string;
+  club_set_id: string | null;
   course?: Course;
   tee?: Tee;
+  club_set?: ClubSet;
+}
+
+export interface ClubSet {
+  id: string;
+  name: string;
+  clubs: string[];
+  user_id: string;
+  created_at: string;
 }
