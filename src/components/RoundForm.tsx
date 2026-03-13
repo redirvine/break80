@@ -361,7 +361,7 @@ export default function RoundForm({ round }: RoundFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-7">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
         <div>
           <label htmlFor="birdies" className="mb-1 block text-sm font-medium">
             Birdies
@@ -422,6 +422,9 @@ export default function RoundForm({ round }: RoundFormProps) {
             className={inputClass}
           />
         </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
         <div>
           <label htmlFor="total_putts" className="mb-1 block text-sm font-medium">
             Putts
